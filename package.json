@@ -1,0 +1,28 @@
+{
+  "name": "fifawc2014",
+  "version": "0.0.2",
+  "description": "prueba para citytaxi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsebastianms1/FifaWC2014.git"
+  },
+  "keywords": [
+    "citytaxi",
+    "prueba",
+    "test"
+  ],
+  "author": "Juan Marulanda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsebastianms1/FifaWC2014/issues"
+  },
+  "homepage": "https://github.com/jsebastianms1/FifaWC2014#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mysql": "^2.16.0"
+  }
+}
