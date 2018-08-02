@@ -1,6 +1,7 @@
 const request = require('request-promise-native');
 const pathbase = "https://montanaflynn-fifa-world-cup.p.mashape.com/";
-const path2 = "https://restcountries-v1.p.mashape.com/all";
+const path2 = "https://restcountries-v1.p.mashape.com/all/";
+const path3 = "https://restcountries-v1.p.mashape.com/name";
 const options = {
     json : true,
     method : 'GET',
@@ -18,7 +19,7 @@ function getTeams(){
         result.forEach(element => {
              data.push({
                 name:element.title,
-                country_id:element.country_id,
+                country_id:element.id,
              })
          });
          return data;
@@ -57,6 +58,95 @@ function getFlagRegion(){
        });
 }
 
+function getFlagRegion2(countryName){
+    const name = countryName;
+    const result = request(`${path3}/${name}`, options);
+    return result.then((result) =>{
+       const data = {}; 
+       result.forEach(element => {
+            data[element.name] = {
+                alpha3Code:element.alpha3Code,
+                region: element.region
+            };
+        });
+        return data;
+       }).catch((err)=>{
+           return Promise.reject(err);
+       });
+}
+
+
+function getRounds(){
+    const result = request(`${pathbase}rounds`, options);
+     return result.then((result) =>{
+        const data = []; 
+        result.forEach(element => {
+             data.push({
+                id:element.id, 
+                roundname:element.title,
+             })
+         });
+         return data;
+        }).catch((err)=>{
+            return Promise.reject(err)
+        });
+}
+
+function getGames(){
+    const result = request(`${pathbase}games`, options);
+     return result.then((result) =>{
+        const data = []; 
+        result.forEach(element => {
+             data.push({
+                id:element.round_id, 
+                team1:element.team1_id,
+                team2: element.team2_id,
+                score1: element.score1,
+                score2: element.score2,
+                date:element.play_at,
+             })
+         });
+         return data;
+        }).catch((err)=>{
+            return Promise.reject(err)
+        });
+}
+
+function getGoals(){
+    const result = request(`${pathbase}goals`, options);
+     return result.then((result) =>{
+        const data = []; 
+        result.forEach(element => {
+             data.push({
+                personId:element.person_id, 
+                teamId:element.team_id,
+                minute:element.minute,
+                og:element.owngoal
+             })
+         });
+         return data;
+        }).catch((err)=>{
+            return Promise.reject(err)
+        });
+}
+
+function getPersons(){
+    const result = request(`${pathbase}persons`, options);
+     return result.then((result) =>{
+        const data = []; 
+        result.forEach(element => {
+             data.push({
+                id:element.id,
+                name:element.name,
+             })
+         });
+         return data;
+        }).catch((err)=>{
+            return Promise.reject(err)
+        });
+}
+
+
 /*
 async function getTeam(){
     try{
@@ -85,5 +175,10 @@ module.exports = {
     getTeams,
     getGamesID,
     getFlagRegion,
+    getFlagRegion2,
+    getRounds,
+    getGames,
+    getGoals,
+    getPersons,
 }
 
