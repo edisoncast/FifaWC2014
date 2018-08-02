@@ -22,7 +22,11 @@
   },
   "homepage": "https://github.com/jsebastianms1/FifaWC2014#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "mysql": "^2.16.0"
+    "helmet": "^3.13.0",
+    "mysql": "^2.16.0",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5"
   }
 }
