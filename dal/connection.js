@@ -21,6 +21,11 @@ return sequelize
     const team = models.team(sequelize,Sequelize);
     const game = models.game(sequelize,Sequelize);
     const goal = models.goal(sequelize,Sequelize);
+   /* team.hasMany(game,{
+      foreignKey:'team1',
+      foreignKey:'team2' 
+    });
+    */
     return sequelize.sync().then(()=>{
         return sequelize;
     });

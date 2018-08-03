@@ -29,6 +29,14 @@ router.get('/getScorers',(req,res)=>{
         })
 })
 
+router.get('/loadSave',(req,res)=>{
+    controller.fifaController.loadSave()
+        .then((result)=>{
+            res.status(200).json(result);
+        }).catch((err)=>{
+            res.status(500).json(err);
+        })
+})
 
 
 module.exports = router;

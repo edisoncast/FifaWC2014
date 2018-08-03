@@ -125,6 +125,7 @@ function getGoals(){
         const data = []; 
         result.forEach(element => {
              data.push({
+                goal_id:element.id,
                 personId:element.person_id, 
                 gameID:element.game_id,
                 teamId:element.team_id,

@@ -13,10 +13,52 @@ function loadSave(){
                 const teams = data[1];
                 const matches = data[2];
                 const goals = data[3];
-        }
+                dal.connect.then((db)=>{ 
+                    
+                    rounds.forEach((element)=>{
+                        db.models.round.create({
+                            id: element.id,
+                            name:element.roundname,
+                        })
+                    })
+                    teams.forEach(element2 =>{
+                        db.models.team.create({
+                            country_id:element2.country_id,
+                            name:element2.name,
+                            region:element2.region,
+                            //subregion:element2.subregion,
+                            flag:element2.flag,
+                        })
+                    })
+                    
+                    matches.forEach(element3 =>{
+                        db.models.game.create({
+                            id:element3.idgame,
+                            //round_id:element3.id,
+                            group_id:element3.group,
+                            round:element3.round,
+                            team1:element3.team1,
+                            team2:element3.team2,
+                            score1:element3.score1,
+                            score2:element3.score2,
+                            date:element3.date,
+                            winner:element3.winner,
+                        })
+                    })
+                    
+                   goals.forEach(element4=>{
+                       db.models.goal.create({
+                           id_goal:element4.id,
+                           //player_id:element4.player_id,
+                           name_scorer:element4.name,
+                           id_team:element4.team,
+                           minute:element4.minute,
+                           owngoal:element4.owngoal,
+                       })
+                   })
+                }).catch(excep=>{return Promise.reject(excep)})
+            }
     )
-
-
 }
 
 function teams() {
@@ -102,7 +144,8 @@ function goals(){
                 goals.forEach(element2 =>{
                     if (element2.personId===element.id){
                         scorers.push({
-                            id:element.id,
+                            id:element2.goal_id,
+                            player_id:element2.personId,
                             game_id:element2.gameID,
                             name:element.name,
                             team:element2.teamId,

@@ -3,7 +3,6 @@ module.exports = (sequelize,DataTypes)=>{
         id_goal : {
             type:DataTypes.INTEGER,
             primaryKey:true,
-            autoicrement:true,
         },
         id_scorer: {
             type:DataTypes.INTEGER
@@ -18,7 +17,7 @@ module.exports = (sequelize,DataTypes)=>{
             type:DataTypes.INTEGER
         },
         owngoal : {
-            type:DataTypes.BOOLEAN
+            type:DataTypes.CHAR
         },
 
     });

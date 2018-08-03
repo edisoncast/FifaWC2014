@@ -4,6 +4,9 @@ module.exports = (sequelize,DataTypes)=>{
             type:DataTypes.INTEGER,
             primaryKey:true
         },
+        round_id : {
+            type:DataTypes.INTEGER
+        },
         round : {
             type:DataTypes.STRING
         },
