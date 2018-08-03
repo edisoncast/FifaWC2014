@@ -69,7 +69,8 @@ function getFlagRegion2(countryName){
        result.forEach(element => {
             data[element.name] = {
                 alpha3Code:element.alpha3Code,
-                region: element.region
+                region: element.region,
+                subregion: element.subregion,
             };
         });
         return data;
@@ -101,12 +102,15 @@ function getGames(){
         const data = []; 
         result.forEach(element => {
              data.push({
-                id:element.round_id, 
+                idgame:element.id,
+                id:element.round_id,
+                group: element.group_id, 
                 team1:element.team1_id,
                 team2: element.team2_id,
                 score1: element.score1,
                 score2: element.score2,
                 date:element.play_at,
+                winner:element.winner,
              })
          });
          return data;
@@ -122,9 +126,10 @@ function getGoals(){
         result.forEach(element => {
              data.push({
                 personId:element.person_id, 
+                gameID:element.game_id,
                 teamId:element.team_id,
                 minute:element.minute,
-                og:element.owngoal
+                og:element.owngoal,
              })
          });
          return data;

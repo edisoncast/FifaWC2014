@@ -13,11 +13,14 @@ const sequelize = new Sequelize('prueba', 'prueba', 'citytaxi', {
   },
 });
 
-function loadbd(){
+function loadDB(){
 return sequelize
   .authenticate()
   .then(() => {
+    const round = models.round(sequelize,Sequelize);
     const team = models.team(sequelize,Sequelize);
+    const game = models.game(sequelize,Sequelize);
+    const goal = models.goal(sequelize,Sequelize);
     return sequelize.sync().then(()=>{
         return sequelize;
     });
@@ -28,4 +31,4 @@ return sequelize
   
 }
 
-module.exports=loadbd();
+module.exports=loadDB();

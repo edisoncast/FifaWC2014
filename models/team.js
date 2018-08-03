@@ -11,6 +11,10 @@ module.exports = (sequelize,DataTypes)=>{
         region : {
             type:DataTypes.STRING
         },
+        subregion : {
+            type:DataTypes.STRING
+        },
+
         flag : {
             type:DataTypes.STRING
         },

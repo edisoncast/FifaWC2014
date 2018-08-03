@@ -1,6 +1,24 @@
 const agents = require('../agents');
 const dal = require('../dal');
 
+function loadSave(){
+    const requestRounds = agents.fifa.getRounds();
+    const requestTeams = teams();
+    const requestMatchdays = matchdays();
+    const requestGoals = goals ();
+    return Promise.all([requestRounds,requestTeams, 
+        requestMatchdays,requestGoals]).then(
+            (data)=>{
+                const rounds = data[0];
+                const teams = data[1];
+                const matches = data[2];
+                const goals = data[3];
+        }
+    )
+
+
+}
+
 function teams() {
     const requestTeams = agents.fifa.getTeams();
     const requestGamesID = agents.fifa.getGamesID();
@@ -9,7 +27,6 @@ function teams() {
         (results) => {
             const gamesID = results[0];
             const teams = results[1];
-            //const flagRegion = results[2];
             const worldCupTeams = [];
             const tempteam = [];
             teams.forEach(element => {
@@ -29,12 +46,10 @@ function teams() {
                         name:tempteam[index].name,
                         country_id:tempteam[index].country_id,
                         region: element2[country_name].region,
+                        subregion: element2[country_name].subregion,
                         flag: `https://restcountries.eu/data/${element2[country_name].alpha3Code.toLowerCase()}.svg`,
                     })
                 })
-            //    dal.connect.then((db)=>{
-              //      db.models.team.
-              //  })
                 return worldCupTeams;
             }).catch(excep => {
                 return Promise.reject(excep)})
@@ -55,12 +70,16 @@ function matchdays() {
                 games.forEach(element2 =>{
                     if (element.id === element2.id){
                         game.push({
+                            idgame: element2.idgame,
+                            id: element.id,
+                            group: element2.group,
                             round: element.roundname,
                             team1:element2.team1,
                             team2:element2.team2,
                             score1:element2.score1,
                             score2:element2.score2,
                             date:element2.date,
+                            winner: element2.winner,
                         })
                     }
                 })
@@ -84,6 +103,7 @@ function goals(){
                     if (element2.personId===element.id){
                         scorers.push({
                             id:element.id,
+                            game_id:element2.gameID,
                             name:element.name,
                             team:element2.teamId,
                             minute:element2.minute,
@@ -107,4 +127,5 @@ module.exports = {
     teams,
     matchdays,
     goals,
+    loadSave,
 }

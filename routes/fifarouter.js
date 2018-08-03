@@ -11,7 +11,7 @@ router.get('/getTeams',(req,res)=>{
         })
 })
 
-router.get('/getRounds',(req,res)=>{
+router.get('/getMatches',(req,res)=>{
     controller.fifaController.matchdays()
         .then((result)=>{
             res.status(200).json(result);
