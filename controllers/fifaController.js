@@ -1,6 +1,12 @@
 const agents = require('../agents');
 const dal = require('../dal');
 
+/**
+ *Función para realizar el setup del API
+ *
+ * @returns {Promise} que almacena la información obtenida de 
+ * la API que contienen 4 arreglos 
+ */
 function loadSave(){
     const requestRounds = agents.fifa.getRounds();
     const requestTeams = teams();
@@ -61,6 +67,14 @@ function loadSave(){
     )
 }
 
+/**
+ *Toma los datos necesarios por equipo, cruzando
+ *información de ambas API
+ *
+ * @returns {Promise} un arreglo que contiene 32 objetos
+ * con las siguientes propiedades para cada selección:
+ * id del pais, nombre, región, subregión y bandera
+ */
 function teams() {
     const requestTeams = agents.fifa.getTeams();
     const requestGamesID = agents.fifa.getGamesID();
@@ -100,6 +114,15 @@ function teams() {
         return Promise.reject(excep) })
 }
 
+/**
+ *Toma los datos necesarios por partido, usando
+ *solo los endpoints de la API del mundial
+ *
+ * @returns {Promise} un arreglo que contiene 64 objetos
+ * con las siguientes propiedades para cada partido:
+ * id del partido, id ronda, grupo(si tiene),
+ * id ambos equipos, goles ambos equipos, fecha y ganador
+ */
 function matchdays() {
     const requestRounds = agents.fifa.getRounds();
     const requestGames = agents.fifa.getGames();
@@ -132,6 +155,15 @@ function matchdays() {
 }
 
 
+/**
+ *Toma los datos necesarios por equipo,
+ * con información de los endpoint goals y persons
+ *
+ * @returns {Promise} un arreglo que contiene 172 objetos
+ * con las siguientes propiedades para cada gol marcado:
+ * id del gol,id jugador, id equipo al que pertenece 
+ * el gol,minuto del gol y si fue o no autogol
+ */
 function goals(){
     const requestGoals = agents.fifa.getGoals();
     const requestPersons = agents.fifa.getPersons();

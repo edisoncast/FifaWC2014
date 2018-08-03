@@ -13,6 +13,12 @@ const sequelize = new Sequelize('prueba', 'prueba', 'citytaxi', {
   },
 });
 
+/**
+ *Función para conectarse a la bd
+ *
+ * @returns {Promise} que sincroniza la bd con los modelos
+ * y genera una conexión
+ */
 function loadDB(){
 return sequelize
   .authenticate()
