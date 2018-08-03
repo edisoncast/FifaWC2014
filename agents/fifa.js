@@ -6,7 +6,7 @@ const options = {
     json : true,
     method : 'GET',
     headers : {
-        "X-Mashape-Key" : "o8pbkyQL4qmshzazRexAK5RqRrnAp11h1THjsnBj1l8ry80jG1",
+        "X-Mashape-Key" : "ZVovVZcrzDmshVeZJxFpGsohp5jdp1x6j8rjsnqz0Cf8e8Ovqz",
         accepts: "json",
         Accept: "application/json"
     }
@@ -59,7 +59,10 @@ function getFlagRegion(){
 }
 
 function getFlagRegion2(countryName){
-    const name = countryName;
+    let name = encodeURI(countryName);
+    if (name === 'England'){
+        name = 'United Kingdom'
+    }
     const result = request(`${path3}/${name}`, options);
     return result.then((result) =>{
        const data = {}; 

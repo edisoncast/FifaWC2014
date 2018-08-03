@@ -1,39 +1,55 @@
 const agents = require('../agents');
+const dal = require('../dal');
 
 function teams() {
     const requestTeams = agents.fifa.getTeams();
     const requestGamesID = agents.fifa.getGamesID();
-    const requestFlagRegion = agents.fifa.getFlagRegion2();
+    const promises =[];
     return Promise.all([requestGamesID, requestTeams]).then(
         (results) => {
             const gamesID = results[0];
             const teams = results[1];
             //const flagRegion = results[2];
             const worldCupTeams = [];
+            const tempteam = [];
             teams.forEach(element => {
                 if (gamesID.has(element.country_id)) {
-                    worldCupTeams.push({
+                    tempteam.push({
                         country_id: element.country_id,
                         name: element.name,
-                        //region: requestFlagRegion[element.name].region,
-                        //flag: `https://restcountries.eu/data/${requestFlagRegion[element.name].alpha3Code}.svg`,
                     })
+                    const requestFlagRegion = agents.fifa.getFlagRegion2(element.name);
+                    promises.push(requestFlagRegion);
                 }
             });
-            return worldCupTeams;
+            return Promise.all(promises).then((data)=>{
+                data.forEach((element2,index)=>{
+                    const country_name = Object.keys(element2)[0];
+                    worldCupTeams.push({
+                        name:tempteam[index].name,
+                        country_id:tempteam[index].country_id,
+                        region: element2[country_name].region,
+                        flag: `https://restcountries.eu/data/${element2[country_name].alpha3Code.toLowerCase()}.svg`,
+                    })
+                })
+            //    dal.connect.then((db)=>{
+              //      db.models.team.
+              //  })
+                return worldCupTeams;
+            }).catch(excep => {
+                return Promise.reject(excep)})
         }
-    ).catch(excep => { return Promise.reject(excep) })
+    ).catch(excep => { 
+        return Promise.reject(excep) })
 }
 
 function matchdays() {
     const requestRounds = agents.fifa.getRounds();
     const requestGames = agents.fifa.getGames();
-    const teams = teams();
-    return Promise.all([requestRounds, requestGames, teams]).then(
+    return Promise.all([requestRounds, requestGames,]).then(
         (results) => {
             const rounds = results[0];
             const games = results[1];
-            const teams = results[2];
             const game = [];
             rounds.forEach(element => {
                 games.forEach(element2 =>{
@@ -82,7 +98,9 @@ function goals(){
 
 }
 
-
+function groups(){
+    
+}
 
 
 module.exports = {
