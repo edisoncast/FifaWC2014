@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers');
 
+
+/*
+* Desde postman, puedo ver que los métodos si devuelven
+* un objeto con lo tomado desde el API
+*/
 router.get('/getTeams',(req,res)=>{
     controller.fifaController.teams()
         .then((result)=>{
@@ -37,6 +42,14 @@ router.get('/loadSave',(req,res)=>{
             res.status(500).json(err);
         })
 })
+
+
+/*
+* Interacción con la base de datos, peticiones 
+* para la vista
+*/
+
+
 
 
 module.exports = router;

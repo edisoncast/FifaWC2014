@@ -1,15 +1,16 @@
 const Sequelize = require('sequelize');
 const models = require('../models');
+const env = require('./setup')
 
-const sequelize = new Sequelize('prueba', 'prueba', 'citytaxi', {
-  host: 'localhost',
-  dialect: 'mysql',
+const sequelize = new Sequelize(env.database, env.username, env.password, {
+  host: env.host,
+  dialect: env.dialect,
   operatorsAliases: false,
   pool: {
-    max: 5,
-    min: 3,
-    acquire: 30000,
-    idle: 10000
+    max: env.max,
+    min: env.min,
+    acquire: env.acquire,
+    idle: env.idle,
   },
 });
 
@@ -27,11 +28,20 @@ return sequelize
     const team = models.team(sequelize,Sequelize);
     const game = models.game(sequelize,Sequelize);
     const goal = models.goal(sequelize,Sequelize);
-   /* team.hasMany(game,{
-      foreignKey:'team1',
-      foreignKey:'team2' 
+    game.belongsTo(round);
+    goal.belongsTo(team);
+    team.hasMany(game,{
+      as: 'team1',
+      foreignKey:'team1fk', 
     });
-    */
+    team.hasMany(game,{
+      as: 'team2',
+      foreignKey:'team2fk', 
+    });
+    game.belongsTo(round,{
+      foreignKey:'id_team'
+    });
+
     return sequelize.sync().then(()=>{
         return sequelize;
     });
@@ -42,4 +52,6 @@ return sequelize
   
 }
 
-module.exports=loadDB();
+module.exports={
+  loadDB,
+}

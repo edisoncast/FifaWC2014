@@ -7,14 +7,8 @@ module.exports = (sequelize,DataTypes)=>{
         round_id : {
             type:DataTypes.INTEGER
         },
-        round : {
+        round_name : {
             type:DataTypes.STRING
-        },
-        team1 : {
-            type:DataTypes.INTEGER
-        },
-        team2 : {
-            type:DataTypes.INTEGER
         },
         score1: {
             type:DataTypes.INTEGER

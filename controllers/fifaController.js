@@ -19,8 +19,7 @@ function loadSave(){
                 const teams = data[1];
                 const matches = data[2];
                 const goals = data[3];
-                dal.connect.then((db)=>{ 
-                    
+                dal.connect.loadDB().then((db)=>{ 
                     rounds.forEach((element)=>{
                         db.models.round.create({
                             id: element.id,
@@ -42,9 +41,9 @@ function loadSave(){
                             id:element3.idgame,
                             //round_id:element3.id,
                             group_id:element3.group,
-                            round:element3.round,
-                            team1:element3.team1,
-                            team2:element3.team2,
+                            round_name:element3.round,
+                            team1fk:element3.team1,
+                            team2fk:element3.team2,
                             score1:element3.score1,
                             score2:element3.score2,
                             date:element3.date,
@@ -193,14 +192,11 @@ function goals(){
 
 }
 
-function groups(){
-    
-}
-
 
 module.exports = {
     teams,
     matchdays,
     goals,
     loadSave,
+
 }
